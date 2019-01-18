@@ -7,7 +7,7 @@ const getters = {
     return localforage.getItem('curProd')
   },
   applyInfo: state => state.product.applyInfo,
-  personalInfo: state => state.product.personalInfo,
+  personInfo: state => state.product.personInfo,
   avatar: state => state.user.avatar,
   name: state => state.user.name,
   introduction: state => state.user.introduction,

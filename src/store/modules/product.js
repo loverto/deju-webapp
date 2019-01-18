@@ -6,8 +6,7 @@ const product = {
     curProd: null,
     // 申请信息
     applyInfo: {},
-    // 个人信息
-    personalInfo: {}
+    personInfo:{}
   },
 
   mutations: {
@@ -16,9 +15,8 @@ const product = {
     },
     SAVE_APPLY_INFO: (state, data) => {
       state.applyInfo = Object.assign(state.applyInfo, data)
-    },
-    SAVE_PERSONAL_INFO: (state, data) => {
-      state.personalInfo = Object.assign(state.personalInfo, data)
+    },SAVE_PERSON_INFO: (state, data) => {
+      state.personInfo = Object.assign(state.personInfo, data)
     }
   },
 
@@ -39,9 +37,9 @@ const product = {
         response()
       })
     },
-    SavePersonalInfo: ({ commit }, data) => {
+    SavePersonInfo: ({ commit }, data) => {
       return new Promise((response) => {
-        commit('SAVE_PERSONAL_INFO', data)
+        commit('SAVE_PERSON_INFO', data)
         response()
       })
     }
