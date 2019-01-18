@@ -158,14 +158,14 @@
 </template>
 
 <script>
-  import { 
+  import {
     InputItem,
     Button,
-    Field, 
-    NoticeBar, 
-    ImageReader, 
-    Icon, 
-    Toast, 
+    Field,
+    NoticeBar,
+    ImageReader,
+    Icon,
+    Toast,
     Cashier,
     Dialog
   }
@@ -176,6 +176,7 @@
   import { Validator } from "vee-validate"
   import { saveApplyInfo } from '@/api/product'
   import { pay } from '@/api/pay'
+  import {savePersonInfo} from "../../api/product";
 
   // 手机号验证器
   Validator.extend("phone", {
@@ -251,6 +252,7 @@
     computed: {
       ...mapGetters([
         'applyInfo',
+        'personInfo',
         'product',
         'user'
       ]),
@@ -301,17 +303,25 @@
 
             const pf = this.imageList.readerFront[0]
             const pb = this.imageList.readerBack[0]
-            // Save
-            this.$store.dispatch('SaveApplyInfo', {
+            // Save,保存个人信息
+            this.$store.dispatch('SavePersonInfo', {
               name: this.ruleForm.realName,
               realNameMobilePhoneNumber: this.ruleForm.mobile,
               identityNumber: this.ruleForm.idcard,
               idCardFrontPhoto: pf.substring(pf.indexOf(',') + 1, pf.length),
               idCardFrontPhotoContentType: this.imageList.readerFront[1],
               idCardBackPhoto: pb.substring(pb.indexOf(',') + 1, pf.length),
-              idCardBackPhotoContentType: this.imageList.readerBack[1]
+              idCardBackPhotoContentType: this.imageList.readerBack[1],
+              user:this.user
             }).then(response => {
               this.step = 2
+              savePersonInfo(this.personInfo).then(response=>{
+                if (response.status === 201) {
+                  //this.personInfo=response.data
+                  this.$store.dispatch('SavePersonInfo',response.data)
+                  //this.$router.push({ name: 'PayReturnPage', params: { auth: true } })
+                }
+              })
             }).catch(err => {
               console.error(err)
             })
@@ -342,6 +352,7 @@
           orderStatus: '未审核',
           authorizedInquiryFee: 50,
           auditStatus: 0,
+          personalInfo:this.personInfo,
           product: this.product,
           user: this.user
         }).then(res => {
