@@ -4,7 +4,9 @@ const getters = {
   token: state => state.user.token,
   product: state => state.product.product,
   applyInfo: () => {
-    return localforage.getItem('cur_apply_info')
+    localforage.getItem('cur_apply_info')
+
+    return localStorage.getItem('cur_apply_info')
   },
   personalInfo: state => state.product.personalInfo,
   avatar: state => state.user.avatar,

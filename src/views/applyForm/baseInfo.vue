@@ -314,7 +314,8 @@
     },
     methods: {
       ...mapActions([
-        'saveApplyInfoForm'
+        'saveApplyInfoForm',
+        'SaveApplyInfo'
       ]),
       onReaderSelect() {
         Toast.loading('图片读取中...')
@@ -422,6 +423,7 @@
        * @param  {Boolean} payed 是否7天内支付过了
        */
       saveApplyInfo(payed) {
+        console.log("curApplyInfo:",this.curApplyInfo)
         const applyInfoForm = Object.assign({}, this.curApplyInfo, {
           paymentMethod: this.payWay,
           paymentStatus: 0,
@@ -432,6 +434,8 @@
           personalInformation: this.personalInfo,
           user: this.user
         })
+        console.log("applyInfoForm{}:",applyInfoForm)
+        this.SaveApplyInfo(applyInfoForm)
         saveApplyInfo(applyInfoForm).then(response => {
           if (response.status === 201) {
             this.nextLoading = false
@@ -449,18 +453,19 @@
                 // 微信支付
                 if (this.payWay === 'WEIXINPAY') {
                   // 重定向到公众号页面
-                  const a = document.createElement('a')
-                  a.setAttribute('href', resp.data ? resp.data : 'javascript:void()')
-                  a.setAttribute('target', '_blank')
-                  a.setAttribute('id', 'redirect-wx__link')
-                  // 避免重复添加
-                  if (document.getElementById('redirect-wx__link')) {
-                    document.body.removeChild(document.getElementById('redirect-wx__link'))
-                  }
-                  document.body.appendChild(a)
-                  a.click()
+                  // const a = document.createElement('a')
+                  // a.setAttribute('href', resp.data ? resp.data : 'javascript:void()')
+                  // a.setAttribute('target', '_blank')
+                  // a.setAttribute('id', 'redirect-wx__link')
+                  // // 避免重复添加
+                  // if (document.getElementById('redirect-wx__link')) {
+                  //   document.body.removeChild(document.getElementById('redirect-wx__link'))
+                  // }
+                  // document.body.appendChild(a)
+                  // a.click()
+                  document.location.href=resp.data;
                 }
-                // 支付宝支付 
+                // 支付宝支付
                 else {
                   this.payForm = resp.data
                   this.$nextTick(() => {

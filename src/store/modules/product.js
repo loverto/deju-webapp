@@ -51,18 +51,23 @@ const product = {
         })
       })
     },
-    
+
     /**
      * 保存用户在产品详情页填写的信息
      */
-    
+
     /* eslint-disable */
     SaveApplyInfo: ({ commit }, data) => {
-      return new Promise((response) => {
-        localforage.setItem('cur_apply_info', data).then(value => {
-          response(value)
-        })
-      })
+      console.log("SaveApplyInfo:{}",data)
+      //return new Promise((response) => {
+      console.log("current {}",data)
+      localforage.setItem('cur_apply_info', data)
+      console.log("SaveApplayInfo",localforage.getItem("cur_apply_info"))
+
+      localStorage.setItem("cur_apply_info",data)
+      console.log("LocalStorage.setItem",data)
+      console.log("LocalStorage.getItem",localStorage.getItem("cur_apply_info"))
+      //})
     },
     /**
      * 保存申请表单信息
@@ -70,6 +75,9 @@ const product = {
     saveApplyInfoForm: ({ commit }, data) => {
       return new Promise((response) => {
         commit('SAVE_APPLY_INFO_FORM', data)
+        localforage.setItem('cur_apply_info', data).then(value => {
+          response(value)
+        })
         response()
       })
     },

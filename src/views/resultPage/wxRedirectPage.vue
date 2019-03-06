@@ -16,7 +16,7 @@
         type="money"
         v-model="cashierAmount"
       />
-      
+
     </md-field>
     <div class="footer-btn">
       <md-button @click="handleDopay">立即支付</md-button>
@@ -52,17 +52,20 @@
       [InputItem.name]: InputItem
     },
     created() {
+      console.log(this.applyInfo)
       if (this.applyInfo) {
-        this.applyInfo.then(data => {
-          if (data) {
-            this.curApplyInfo = deepClone(data)
-          }
-        })
+        // this.applyInfo.then(data => {
+        //   if (data) {
+            //this.curApplyInfo = deepClone(data)
+            this.curApplyInfo = this.applyInfo
+          // }
+        // })
       }
     },
     methods: {
       handleDopay() {
         // 先获取支付配置信息
+        console.log(this.curApplyInfo)
         invokeDopay(this.curApplyInfo).then(response => {
           if (response && response.statusCode === '200') {
             // Response body 参数是什么？
@@ -84,9 +87,9 @@
           else if(res.err_msg == "get_brand_wcpay_request:cancel") {
             Toast.info('支付结束！')
           }
-          else if(res.err_msg == "get_brand_wcpay_request：fail") {  
+          else if(res.err_msg == "get_brand_wcpay_request：fail") {
             Toast.info("支付失败!")
-          }  
+          }
         })
       }
     }
