@@ -1,19 +1,25 @@
 <template>
   <div class="product-detail__wrapper" v-if="product">
-    <back-to :icon="product.icon" :title="product.title"/>
+    <div class="nav-header">
+      <div
+        class="thumbnail"
+        :style="'background-image: url(data:image/png;base64,' + product.icon + ')'"
+      >
+      </div>
+      <div class="title">{{ product.title }}</div>
+    </div>
     <div class="main-content">
       <div class="detail-inner">
         <div class="desc-grid">
           <div class="grid-item">申请人数: {{ product.numberOfApplicants }}人</div>
-          <div class="grid-item">利率: {{ product.referenceMonthInterest}}%</div>
-          <!-- <template v-if="earn">
+          <template v-if="earn">
             <div class="grid-item">利息: {{ earn }}元</div>
           </template>
           <template v-else>
             <div class="grid-item">
               利率范围: {{ product.interestRateRangeStart }}%-{{ product.interestRateRangeEnd }}%
             </div>
-          </template> -->
+          </template>
           <div class="grid-item">
             额度范围: {{ formatMoney(product.loanRangeStart )}}-{{ formatMoney(product.loanRangeEnd )}}
           </div>
@@ -49,7 +55,6 @@
                   class="form-input"
                   readonly="readonly"
                   placeholder="请选择期限"
-                  @focus="handleIconClick"
                 >
               </div>
               <div class="item-unit item-unit__icon">
@@ -60,7 +65,7 @@
                   @click="handleIconClick"
                 />
               </div>
-              <div class="item-list__wrapper" v-show="isActive">
+              <div class="item-list__wrapper" v-if="isActive">
                 <template v-for="(item, $index) in rates">
                   <div class="rate" @click="handleRateClick(item)" :key="$index">{{item.label + '个月'}}</div>
                 </template>
@@ -258,32 +263,11 @@
     display: flex;
     align-items: center;
 
-    .is-left,
-    .is-right {
-      flex: .5;
-    }
-
-    .is-left {
-      color: #f5f5f5;
-      display: flex;
-      align-items: center;
-
-      .back-text {
-        font-size: 30px;
-      }
-    }
-
-    .is-center {
-      flex: 1;
-      display: flex;
-      justify-content: center;
-    }
-
     .thumbnail {
       width: 50px;
       height: 50px;
-      // background: #98aec3;
-      // border-radius: 50%;
+      background: #98aec3;
+      border-radius: 50%;
       margin: 0 20px 0 20px;
       font-size: 35px;
       line-height: 1.5;

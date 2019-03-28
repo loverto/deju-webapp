@@ -1,7 +1,6 @@
 <template>
-  <div class="user-data__wrapper">
-    <back-to backLink="/center" />
-    <md-field v-if="user">
+  <div class="user-data__wrapper" v-if="user">
+    <md-field>
       <md-input-item
         v-model="user.login"
         title="账号:"

@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import App from './App.vue'
-import BackTo from './components/BackTo/index.vue'
 import router from './router'
 import store from './store'
 import "normalize.css";
@@ -15,10 +14,6 @@ import './permission'
 import zh_CN from 'vee-validate/dist/locale/zh_CN';
 import VeeValidate, { Validator } from 'vee-validate'
 
-// Global register BackTo component
-Vue.component('back-to', BackTo)
-
-// Install VeeValidate
 Vue.use(VeeValidate)
 Validator.localize('zh_CN', zh_CN)
 
